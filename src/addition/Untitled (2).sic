@@ -1,0 +1,7 @@
+; Read two numbers and output their sum. Repeat.
+;
+; Below is the solution to the previous task. You will need to add
+; additional code to perform addition of two inputs (instead of
+; passing through a single input):
+
+.data 12, -3, 3, 12, -3, 6, -2, 12, 9, 12, 12

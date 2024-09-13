@@ -1,0 +1,37 @@
+@start:
+subleq @rp @rp
+subleq @rp @r1
+subleq @0 @0 @proc_foo
+
+subleq @rp @rp
+subleq @rp @r2
+subleq @0 @0 @proc_foo
+
+subleq @0 @0 @HALT
+
+; arbitrary procedure that will jump to rp once finished
+@proc_foo:
+subleq @OUT @0
+subleq @a @a @ret
+
+@ret:
+subleq @a @a @rp:255 ; PATCH
+
+; return consts
+@r1: .data -9
+@r2: .data -18
+
+; tmp registers
+@a: .data 0
+@b: .data 0
+@c: .data 0
+
+@xa: .data 0 ; arg 1 reg
+@xb: .data 0 ; arg 2 reg
+@xc: .data 0 ; arg 3 reg
+@xr: .data 0 ; proc return reg
+
+; consts
+@1: .data 1
+@n1: .data -1
+@0: .data 0

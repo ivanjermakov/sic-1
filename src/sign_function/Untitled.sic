@@ -1,0 +1,25 @@
+@loop:
+subleq @a @IN
+subleq @b @b
+subleq @b @a @lez
+subleq @OUT @n1
+subleq @a @a @loop
+
+@lez:
+subleq @a @a
+subleq @a @b @ez
+subleq @a @a
+subleq @OUT @1 @loop
+
+@ez:
+subleq @OUT @a @loop
+
+@gz:
+subleq @OUT @n1
+subleq @a @a @loop
+
+@a: .data 0
+@b: .data 0
+@1: .data 1
+@0: .data 0
+@n1: .data -1

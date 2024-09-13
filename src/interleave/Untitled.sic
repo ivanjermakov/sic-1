@@ -1,0 +1,47 @@
+@read1:
+subleq @a @a
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @0 @read2
+subleq 128 @b ; PATCH
+
+subleq @read1+15 @n1
+subleq @a @a @read1
+
+@read2:
+subleq @a @a
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @0 @interl
+subleq 144 @b ; PATCH
+
+subleq @read2+15 @n1
+subleq @a @a @read2
+
+@interl:
+subleq @a @a
+subleq @a 128 @done ; PATCH
+subleq @b @b
+subleq @b @a
+subleq @OUT @b
+
+subleq @a @a
+subleq @a 144 @done ; PATCH
+subleq @b @b
+subleq @b @a
+subleq @OUT @b
+
+subleq @interl+4 @n1
+subleq @interl+19 @n1
+subleq @b @b @interl
+
+@done:
+subleq @OUT @0 @read1
+
+@a: .data 0
+@b: .data 0
+
+@0: .data 0
+@n1: .data -1

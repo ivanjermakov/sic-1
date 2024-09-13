@@ -1,0 +1,21 @@
+@loop:
+subleq @acc @acc
+
+@inner:
+subleq @a @a
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @0 @endseq
+
+subleq @acc @b @inner
+
+@endseq:
+subleq @OUT @acc
+subleq @a @a @loop
+
+@a: .data 0
+@b: .data 0
+@acc: .data 0
+
+@0: .data 0

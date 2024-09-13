@@ -1,0 +1,5 @@
+subleq @OUT, @s
+subleq @OUT, @s+1
+
+@s: .data -'H' -'i'
+

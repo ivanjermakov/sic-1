@@ -1,0 +1,133 @@
+@start:
+	subleq @loop_b_i @loop_b_i
+	subleq @loop_b_i @arr_b_np
+@read_a:
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @arr_a_np
+	subleq @0 @0 @read_arr
+@read_b:
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @arr_b_np
+	subleq @t @t
+	subleq @t @n_1
+	subleq @0 @0 @read_arr
+@loop_b:
+	subleq @a @a
+	subleq @a @loop_b_i:255
+	subleq @has_i @has_i
+	subleq @has_i @arr_a_np
+	subleq @xa @xa
+	subleq @xa @a
+	subleq @xa @0 @restart
+	
+	subleq @has_i @has_i
+	subleq @has_i @arr_a_np
+	subleq @0 @0 @has @has_back:
+
+	subleq @a @a
+	subleq @a @xr
+	subleq @OUT @a
+@loop_b_cont:
+	subleq @loop_b_i @n_1
+	subleq @0 @0 @loop_b	
+@restart:
+	subleq @reset_c @reset_c
+	subleq @reset_c @12
+	subleq @clear_i @clear_i
+	subleq @clear_i @arr_a_np
+	subleq @clear_i+1 @clear_i+1
+	subleq @clear_i+1 @arr_a_np
+@reset_loop:
+	subleq @clear_i:0 @clear_i
+	subleq @clear_i @n_1
+	subleq @clear_i+1 @n_1
+	subleq @reset_c @n_1 @reset_loop
+
+	subleq @0 @0 @start
+
+
+@arr_a: .data 0 0 0 0 0 0
+@arr_b: .data 0 0 0 0 0 0
+@t: .data 0
+@reset_c: .data 0
+@arr_a_np: .data -@arr_a
+@arr_b_np: .data -@arr_b
+
+; STD
+
+
+; jump to rp
+@ret:
+	subleq @0 @0 @rp:255 ; PATCH
+
+; read values from @IN until read 0
+; write every value (except 0) consecutively to @read_arr_i
+; @read_arr_i: array (must patch)
+@read_arr:
+	subleq @a @a
+	subleq @a @IN
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @read_arr_done
+@read_arr_write:
+	subleq @read_arr_i:255 @a
+	subleq @read_arr_i @n_1
+	subleq @0 @0 @read_arr
+@read_arr_done:
+	subleq @t @0 @read_b
+	subleq @0 @0 @loop_b
+
+; xr: 1 if xa == xb, 0 otherwise
+@eq:
+	subleq @a @a
+	subleq @a @xa
+	subleq @b @b
+	subleq @b @xb
+	subleq @a @b @eq_le
+	subleq @xr @xr @eq_back
+@eq_le:
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @eq_0
+	subleq @xr @xr @eq_back
+@eq_0:
+	subleq @xr @xr
+	subleq @xr @n_1
+	subleq @0 @0 @eq_back
+
+; xa: value
+; @has_i: array (must patch)
+; xr: 1 if array has xa, 0 otherwise
+@has:
+	subleq @xr @xr
+@has_loop:
+	subleq @a @a
+	subleq @a @has_i:255
+	subleq @xb @xb
+	subleq @xb @a
+	subleq @xb @0 @has_done
+	subleq @0 @0 @eq @eq_back:
+	subleq @xr @0 @has_cont
+@has_done:
+	subleq @0 @0 @has_back
+@has_cont:
+	subleq @has_i @n_1
+	subleq @0 @0 @has_loop
+
+
+; tmp regs
+@a: .data 0
+@b: .data 0
+;@c: .data 0
+
+; call regs
+@xa: .data 0 ; arg 1 reg
+@xb: .data 0 ; arg 2 reg
+;@xc: .data 0 ; arg 3 reg
+@xr: .data 0 ; proc return reg
+
+; consts
+;@1: .data 1
+@n_1: .data -1
+@0: .data 0
+@12: .data 12

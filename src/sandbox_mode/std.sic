@@ -1,0 +1,101 @@
+@start:
+	subleq @rp @rp
+	subleq @rp @start_nrp
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @n_arr_p
+	subleq @0 @0 @read_arr @start_ret:
+	subleq @OUT @xr
+@start_loop:	
+	subleq @0 @0 @start
+	
+@start_nrp: .data -@start_ret
+
+
+@arr: .data 0, 0, 0, 0, 0
+@n_arr_p: .data -@arr
+
+; STD
+
+; read values from @IN until read 0
+; write every value (except 0) consecutively to @read_arr_i and
+; @read_arr_i: array (must patch)
+@read_arr:
+	subleq @a @a
+	subleq @a @IN
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @read_arr_done
+@read_arr_write:
+	!subleq @read_arr_i:255 @a
+	subleq @read_arr_i @n_1
+	subleq @0 @0 @read_arr
+@read_arr_done:
+	subleq @0 @0 @ret
+
+; xr: 1 if xa == xb, 0 otherwise
+@eq:
+	subleq @a @a
+	subleq @a @xa
+	subleq @b @b
+	subleq @b @xb
+	subleq @a @b @eq_le
+	subleq @xr @xr @eq_ret
+@eq_le:
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @eq_0
+	subleq @xr @xr @eq_ret
+@eq_0:
+	subleq @xr @xr
+	subleq @xr @n_1
+@eq_ret:
+	subleq @0 @0 @ret
+
+; xa: value
+; @has_i: array (must patch)
+; xr: 1 if array has xa, 0 otherwise
+@has:
+	subleq @xr @xr
+	subleq @has_rpb @has_rpb
+	subleq @has_rpb @rp
+@has_loop:
+	subleq @a @a
+	subleq @a @has_i:255
+	subleq @xb @xb
+	subleq @xb @a
+	subleq @xb @0 @has_done
+	subleq @rp @rp
+	subleq @rp @has_nrp
+	subleq @0 @0 @eq @has_ret:
+	subleq @rp @rp
+	subleq @rp @has_rpb
+	subleq @xr @0 @has_cont
+@has_done:
+	subleq @rp @rp
+	subleq @rp @has_rpb
+	subleq @0 @0 @ret
+@has_cont:
+	subleq @has_i @n_1
+	subleq @0 @0 @has_loop
+@has_nrp: .data -@has_ret
+@has_rpb: .data 0
+
+; jump to rp
+@ret:
+	subleq @0 @0 @rp:255 ; PATCH
+
+; tmp regs
+@a: .data 0
+@b: .data 0
+@c: .data 0
+
+; call regs
+@xa: .data 0 ; arg 1 reg
+@xb: .data 0 ; arg 2 reg
+@xc: .data 0 ; arg 3 reg
+@xr: .data 0 ; proc return reg
+
+; consts
+@1: .data 1
+@n_1: .data -1
+@0: .data 0

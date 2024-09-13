@@ -1,0 +1,28 @@
+; Read two nonnegative numbers and output the resulting (nonnegative)
+; product. Repeat.
+
+@loop:
+subleq @a @IN
+subleq @c @IN
+subleq @b @c @res
+subleq @c @c
+
+@acc:
+subleq @n @a
+subleq @b @1 @res
+subleq @c @c @acc
+
+@res:
+subleq @c @c
+subleq @c @n
+subleq @OUT @c
+subleq @c @c
+subleq @a @a
+subleq @n @n @loop 
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@n: .data 0
+@0: .data 0
+@1: .data 1

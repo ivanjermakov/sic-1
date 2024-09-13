@@ -1,0 +1,145 @@
+@start:
+	subleq @loop_b_i @loop_b_i
+	subleq @loop_b_i @arr_b_np
+@read_a:
+	subleq @rp @rp
+	subleq @rp @start_nrp
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @arr_a_np
+	subleq @0 @0 @read_arr @start_ret:
+@read_b:
+	subleq @rp @rp
+	subleq @rp @start_nrp2
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @arr_b_np
+	subleq @0 @0 @read_arr @start_ret2:
+@loop_b:
+	subleq @a @a
+	subleq @a @loop_b_i:255
+	subleq @has_i @has_i
+	subleq @has_i @arr_a_np
+	subleq @xa @xa
+	subleq @xa @a
+	subleq @xa @0 @restart
+	
+	subleq @rp @rp
+	subleq @rp @start_nrp3
+	subleq @has_i @has_i
+	subleq @has_i @arr_a_np
+	subleq @0 @0 @has @start_ret3:
+
+	subleq @a @a
+	subleq @a @xr
+	subleq @OUT @a
+@loop_b_cont:
+	subleq @loop_b_i @n_1
+	subleq @0 @0 @loop_b	
+@restart:
+	subleq @a @a
+	subleq @a @arr_a_np
+@reset_loop:
+	.data -12 @n_1 @reset_loop+3
+	;subleq @reset_c:12 @n1
+	;subleq @a @a
+	;subleq @reset_c @n1 @restart2
+	;subleq @0 @0 @start
+@restart2:
+	!subleq @0 @0 @start
+	
+@start_nrp: .data -@start_ret
+@start_nrp2: .data -@start_ret2
+@start_nrp3: .data -@start_ret3
+
+
+@arr_a: .data 0 0 0 0 0 0
+@arr_b: .data 0 0 0 0 0 0
+@arr_a_np: .data -@arr_a
+@arr_b_np: .data -@arr_b
+
+; STD
+
+
+; jump to rp
+@ret:
+	subleq @0 @0 @rp:255 ; PATCH
+
+; read values from @IN until read 0
+; write every value (except 0) consecutively to @read_arr_i
+; @read_arr_i: array (must patch)
+@read_arr:
+	subleq @a @a
+	subleq @a @IN
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @read_arr_done
+@read_arr_write:
+	subleq @read_arr_i:255 @a
+	subleq @read_arr_i @n_1
+	subleq @0 @0 @read_arr
+@read_arr_done:
+	subleq @0 @0 @ret
+
+; xr: 1 if xa == xb, 0 otherwise
+@eq:
+	subleq @a @a
+	subleq @a @xa
+	subleq @b @b
+	subleq @b @xb
+	subleq @a @b @eq_le
+	subleq @xr @xr @eq_ret
+@eq_le:
+	subleq @b @b
+	subleq @b @a
+	subleq @b @0 @eq_0
+	subleq @xr @xr @eq_ret
+@eq_0:
+	subleq @xr @xr
+	subleq @xr @n_1
+@eq_ret:
+	subleq @0 @0 @ret
+
+; xa: value
+; @has_i: array (must patch)
+; xr: 1 if array has xa, 0 otherwise
+@has:
+	subleq @xr @xr
+	subleq @has_rpb @has_rpb
+	subleq @has_rpb @rp
+@has_loop:
+	subleq @a @a
+	subleq @a @has_i:255
+	subleq @xb @xb
+	subleq @xb @a
+	subleq @xb @0 @has_done
+	subleq @rp @rp
+	subleq @rp @has_nrp
+	subleq @0 @0 @eq @has_ret:
+	subleq @rp @rp
+	subleq @rp @has_rpb
+	subleq @xr @0 @has_cont
+@has_done:
+	subleq @rp @rp
+	subleq @rp @has_rpb
+	subleq @0 @0 @ret
+@has_cont:
+	subleq @has_i @n_1
+	subleq @0 @0 @has_loop
+@has_nrp: .data -@has_ret
+@has_rpb: .data 0
+
+
+; tmp regs
+@a: .data 0
+@b: .data 0
+;@c: .data 0
+
+; call regs
+@xa: .data 0 ; arg 1 reg
+@xb: .data 0 ; arg 2 reg
+;@xc: .data 0 ; arg 3 reg
+@xr: .data 0 ; proc return reg
+
+; consts
+;@1: .data 1
+@n_1: .data -1
+@0: .data 0

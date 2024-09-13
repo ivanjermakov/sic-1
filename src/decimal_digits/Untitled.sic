@@ -1,0 +1,8 @@
+@loop:
+subleq @a @IN
+subleq @a @off
+subleq @OUT @a @loop
+subleq @a @a @loop
+
+@a: .data 0
+@off: .data -48

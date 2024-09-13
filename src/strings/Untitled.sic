@@ -1,0 +1,8 @@
+@loop:
+subleq @OUT, @c:@msg
+subleq @c, @n_1
+subleq @tmp, @tmp, @loop
+
+@n_1: .data -1
+@msg: .data -"Hello, world!"
+@tmp: .data 0

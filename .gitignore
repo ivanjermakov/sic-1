@@ -1,0 +1,11 @@
+/**
+
+!.gitignore
+!src
+!src/**
+!README.md
+!cloud.txt
+
+!make-source.ts
+!tsconfig.json
+!package.json

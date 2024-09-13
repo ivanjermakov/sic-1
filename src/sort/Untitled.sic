@@ -1,0 +1,112 @@
+@loop:
+	subleq @reset_c @reset_c
+	subleq @reset_c @12
+	subleq @reset_i @reset_i
+	subleq @reset_i @arr_np
+	subleq @reset_i+1 @reset_i+1
+	subleq @reset_i+1 @arr_np
+@reset_arr:
+	subleq @reset_i:0 @reset_i
+	subleq @reset_i @n_1
+	subleq @reset_i+1 @n_1
+	subleq @reset_c @n_1 @reset_arr
+	subleq @read_arr_i @read_arr_i
+	subleq @read_arr_i @arr_np
+	subleq @a @a @read @read_arr_back:
+@sort:
+	subleq @i @i
+	subleq @i @arr_np
+	subleq @swap_i @swap_i
+	subleq @swap_i @arr_np
+	subleq @clear_i @clear_i
+	subleq @clear_i @arr_np
+	subleq @clear_i+1 @clear_i+1
+	subleq @clear_i+1 @arr_np
+	subleq @j @j
+	subleq @j @arr_np
+	subleq @j @n_1
+	subleq @swap_j @swap_j
+	subleq @swap_j @arr_np
+	subleq @swap_j @n_1
+	subleq @clear_j @clear_j
+	subleq @clear_j @arr_np
+	subleq @clear_j @n_1
+	subleq @clear_j+1 @clear_j+1
+	subleq @clear_j+1 @arr_np
+	subleq @clear_j+1 @n_1
+@sort_inner:
+	subleq @a @a
+	subleq @a @i:0
+	subleq @d @d
+	subleq @d @a
+	subleq @c @c
+	subleq @c @d
+
+	subleq @b @b
+	subleq @b @j:0
+	subleq @d @d
+	subleq @d @b
+	subleq @d @0 @pass_complete
+
+	subleq @c @n_1
+	subleq @c @b @swap
+	subleq @print @0 @sort_cont
+	subleq @OUT @a
+@sort_cont:
+	subleq @i @n_1
+	subleq @j @n_1
+	subleq @swap_i @n_1
+	subleq @swap_j @n_1
+	subleq @clear_i @n_1
+	subleq @clear_i+1 @n_1
+	subleq @clear_j @n_1
+	subleq @clear_j+1 @n_1
+	subleq @0 @0 @sort_inner
+@swap:
+	subleq @dirty @n_1
+	subleq @clear_i:0 @clear_i
+	subleq @clear_j:0 @clear_j
+	subleq @swap_i:0 @b
+	subleq @swap_j:0 @a @sort_cont
+@pass_complete:
+	subleq @print @0 @no_print
+	subleq @OUT @a
+	subleq @OUT @0
+@no_print:
+	subleq @dirty @0 @sorted
+	subleq @dirty @dirty @sort
+@sorted:
+	subleq @print @0 @start_print
+	subleq @print @1
+	subleq @0 @0 @loop
+@start_print:
+	subleq @print @n_1
+	subleq @0 @0 @sort
+@read:
+	subleq @a @IN
+@write:
+	subleq @read_arr_i:255 @a @write_done
+	subleq @read_arr_i @n_1
+	subleq @a @a @read
+@write_done:
+	subleq @0 @0 @read_arr_back
+
+@arr_np: .data -@arr
+@current: .data 0
+@dirty: .data 0
+@print: .data 0
+@reset_c: .data 0
+
+; tmp regs
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+
+; consts
+@1: .data 1
+@n_1: .data -1
+@0: .data 0
+@12: .data 8
+
+@arr: .data 0 0 0 0 0 0 0 0 1

@@ -1,0 +1,47 @@
+@loop:
+subleq @q @q
+subleq @a @a
+subleq @dv @dv
+subleq @dr @dr
+subleq @a @IN
+subleq @dv @a
+subleq @b @b
+subleq @b @IN
+subleq @dr @b
+
+@l2:
+subleq @a @a
+subleq @a @dr
+subleq @b @b
+subleq @b @dv
+subleq @b @a @nextq
+subleq @a @a @res
+
+@nextq:
+subleq @dv @dr
+subleq @q @n1
+subleq @a @a @l2
+
+@res:
+subleq @a @a
+subleq @a @dv
+subleq @a @a
+subleq @a @q
+subleq @OUT @a
+
+subleq @a @a
+subleq @a @dv
+subleq @OUT @a
+subleq @a @a @loop
+
+@a: .data 0
+@b: .data 0
+
+@dv: .data 0
+@dr: .data 0
+@q: .data 0
+@r: .data 0
+
+@1: .data 1
+@0: .data 0
+@n1: .data -1

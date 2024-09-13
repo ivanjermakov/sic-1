@@ -1,0 +1,22 @@
+@loop:
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @lo_lim @skip
+subleq @b @b
+subleq @b @a
+subleq @b @hi_lim @cont
+subleq @b @b @skip
+@cont:
+subleq @a @off
+subleq @OUT @a @loop
+subleq @a @a @loop
+@skip:
+subleq @OUT @a
+subleq @a @a @loop
+
+@a: .data 0
+@b: .data 0
+@off: .data -32
+@lo_lim: .data 96
+@hi_lim: .data 122

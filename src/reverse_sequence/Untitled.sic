@@ -1,0 +1,46 @@
+@read:
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @0 @print
+@m1:
+subleq 128 128 ; SELF MODIFIED
+subleq 128 @a ; SELF MODIFIED
+subleq @a @a
+
+subleq @m1 @n1
+subleq @m1+1 @n1
+subleq @m1+3 @n1
+subleq @m2+1 @n1
+subleq @a @a @read
+
+@print:
+subleq @m1 @1
+subleq @m1+1 @1
+subleq @m1+3 @1
+subleq @m2+1 @1
+
+subleq @a @a
+@m2:
+subleq @a 128 ; SELF MODIFIED
+subleq @OUT @a
+
+subleq @a @a
+subleq @a @m1
+subleq @a @n128 @print
+
+; HACK
+subleq @m1 @n1
+subleq @m1+1 @n1
+subleq @m1+3 @n1
+subleq @m2+1 @n1
+
+subleq @a @a @read
+
+@a: .data 0
+@b: .data 0
+
+@1: .data 1
+@n1: .data -1
+@0: .data 0
+@n128: .data -128

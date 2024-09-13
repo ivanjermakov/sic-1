@@ -1,0 +1,80 @@
+; TODO: improve by limiting scan to [input min, input max] instead of [0, 99]
+@loop:
+@reset:
+subleq @reset_c @reset_c
+subleq @reset_c @reset_s
+subleq @reset_i @reset_i
+subleq @reset_i @a_np
+subleq @reset_i+1 @reset_i+1
+subleq @reset_i+1 @a_np
+
+@reset_arr:
+subleq @reset_i:0 @reset_i
+subleq @reset_i @n_1
+subleq @reset_i+1 @n_1
+subleq @reset_c @n_1 @reset_arr
+
+@read:
+subleq @a @IN
+subleq @arr_i @arr_i
+subleq @arr_i @arr_np
+subleq @arr_i @a
+subleq @arr_i:0 @n_1
+subleq @b @b
+subleq @b @a
+subleq @b @0 @find
+subleq @a @a @read
+
+@find:
+subleq @arr_j @arr_j
+subleq @arr_j @arr_np
+subleq @maxc @maxc
+
+@find_l:
+subleq @a @a
+subleq @a @arr_j:0
+
+subleq @b @b
+subleq @b @maxc
+subleq @c @c
+subleq @b @a @find_cont
+
+@update:
+subleq @maxc @maxc
+subleq @maxc @a
+subleq @b @b
+subleq @b @i
+subleq @max_i @max_i
+subleq @max_i @b
+
+@find_cont:
+subleq @b @b
+subleq @b @i
+subleq @b @n_99 @found
+subleq @i @n_1
+subleq @arr_j @n_1
+subleq @a @a @find_l
+
+@found:
+subleq @a @a
+subleq @a @max_i
+subleq @OUT @a
+subleq @a @a @loop
+
+@arr_np: .data -@arr
+@a_np: .data -@a
+@0: .data 0
+@n_1: .data -1
+@n_99: .data -99
+
+@reset_c: .data 0
+@reset_s: .data 106
+
+;resettable
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@i: .data 0
+@max_i: .data 0
+@maxc: .data 0
+@arr: .data 0 ; actuall size is 100
