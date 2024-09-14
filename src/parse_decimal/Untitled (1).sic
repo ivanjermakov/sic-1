@@ -9,30 +9,24 @@ subleq @r_i @r_i
 subleq @r_j @r_j
 subleq @r_k @r_k
 
-subleq @w_i @arr_np
-subleq @r_i @arr_np
-subleq @r_j @arr_np1
-subleq @r_k @arr_np2
+subleq @w_i @arr_np1
+subleq @r_i @arr_np1
+subleq @r_j @arr_np2
+subleq @r_k @arr_np3
 
 @write_loop:
 subleq @a @IN
 subleq @b @b
 subleq @b @a
-subleq @b @0 @write_done
-subleq @w_i:255 @b
+subleq @b @0 @assemble
 
 subleq @w_i @n_1
 subleq @r_i @n_1
 subleq @r_j @n_1
 subleq @r_k @n_1
-subleq @a @a @write_loop
+subleq @w_i:255 @b
 
-@write_done:
-;TODO: refactor
-subleq @w_i @1
-subleq @r_i @1
-subleq @r_j @1
-subleq @r_k @1
+subleq @a @a @write_loop
 
 @assemble:
 subleq @c @c
@@ -64,12 +58,6 @@ subleq @a @a
 subleq @a @r_k:255
 subleq @a @0 @print
 
-;subleq @b @b
-;subleq @b @n_100
-;@d3_loop:
-;subleq @c @a
-;subleq @b @1 @print
-;subleq @0 @0 @d3_loop
 ;opt: since 3rd digit can max be 1, we only need to do @c-=100
 subleq @c @100
 
@@ -90,5 +78,6 @@ subleq @a @a @loop
 @arr_np: .data -@arr
 @arr_np1: .data -@arr+1
 @arr_np2: .data -@arr+2
+@arr_np3: .data -@arr+3
 @0: .data 0
 @arr: .data 0 0 0

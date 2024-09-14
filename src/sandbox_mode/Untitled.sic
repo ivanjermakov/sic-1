@@ -4,6 +4,7 @@ subleq @arr @arr
 subleq @arr+1 @arr+1
 subleq @arr+2 @arr+2
 
+subleq @a @a
 subleq @w_i @w_i
 subleq @r_i @r_i
 subleq @r_j @r_j
@@ -74,7 +75,9 @@ subleq @a @0 @print
 subleq @c @100
 
 @print:
-subleq @OUT @c
+subleq @a @a
+subleq @a @c
+subleq @OUT @a
 subleq @a @a @loop
 
 @a: .data 0
