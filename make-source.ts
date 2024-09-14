@@ -1,4 +1,3 @@
-import { inspect } from "util";
 import { mkdir, readFile, rmdir, writeFile } from "fs/promises";
 
 const json: any = await (await readFile("cloud.txt")).toString();
@@ -15,7 +14,9 @@ Object.entries(save).forEach(async ([puzzleKey, puzzleStr]: [string, any]) => {
 	const puzzlePath = `src/${puzzleName}`;
 	await mkdir(puzzlePath, { recursive: true });
 	puzzle.solutions.forEach(async (solution: any) => {
-		console.log(solution.name);
-		await writeFile(`${puzzlePath}/${solution.name}.sic`, solution.code);
+		if (!solution.code) return;
+		const path = `${puzzlePath}/${solution.name}.sic`;
+		console.log(path);
+		await writeFile(path, solution.code);
 	});
 });
