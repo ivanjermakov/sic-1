@@ -1,0 +1,83 @@
+@loop:
+@reset:
+subleq @arr @arr
+subleq @arr+1 @arr+1
+subleq @arr+2 @arr+2
+
+subleq @w_i @w_i
+subleq @r_i @r_i
+subleq @r_j @r_j
+subleq @r_k @r_k
+
+subleq @w_i @arr_np1
+subleq @r_i @arr_np1
+subleq @r_j @arr_np2
+subleq @r_k @arr_np3
+
+@write_loop:
+subleq @a @IN
+subleq @b @b
+subleq @b @a
+subleq @b @0 @assemble
+
+subleq @w_i @n_1
+subleq @r_i @n_1
+subleq @r_j @n_1
+subleq @r_k @n_1
+subleq @w_i:255 @b
+
+subleq @a @a @write_loop
+
+@assemble:
+subleq @c @c
+
+@d1:
+subleq @a @a
+subleq @a @r_i:255
+subleq @a @atoi_off
+subleq @c @a
+
+@d2:
+subleq @a @a
+subleq @a @r_j:255
+subleq @d @d
+subleq @d @a
+subleq @a @0 @print
+subleq @a @atoi_off
+
+subleq @b @b
+subleq @b @n_10
+
+@d2_loop:
+subleq @c @a
+subleq @b @1 @d3
+subleq @0 @0 @d2_loop
+
+@d3:
+subleq @a @a
+subleq @a @r_k:255
+subleq @a @0 @print
+
+;opt: since 3rd digit can max be 1, we only need to do @c-=100
+subleq @c @100
+
+@print:
+subleq @OUT @c
+subleq @0 @0 @loop
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+
+@atoi_off: .data 48
+@1: .data 1
+@n_1: .data -1
+@n_10: .data -10
+@100: .data 100
+@arr_np: .data -@arr
+@arr_np1: .data -@arr+1
+@arr_np2: .data -@arr+2
+@arr_np3: .data -@arr+3
+@0: .data 0
+@arr: .data 0 0 0

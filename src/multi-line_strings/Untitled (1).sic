@@ -1,0 +1,14 @@
+@loop:
+subleq @a @IN
+subleq @a @n_11 @cont
+subleq @a @n_10
+@cont:
+subleq @a @11
+subleq @OUT @a
+subleq @a @a @loop
+
+@a: .data 0
+@b: .data 0
+@11: .data 11
+@n_11: .data -11
+@n_10: .data -10

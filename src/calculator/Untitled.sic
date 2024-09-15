@@ -25,10 +25,24 @@ subleq @f @g
 subleq @a @a
 subleq @a @f
 subleq @OUT @a
-subleq @0 @0 @HALT
+subleq @0 @0 @loop
 
 @calc_mult:
-subleq @0 @0 @HALT
+subleq @c @c
+subleq @c @f
+subleq @a @a
+subleq @a @c
+
+subleq @c @c
+subleq @c @g
+subleq @b @b
+subleq @b @c
+
+subleq @nmul_ret @nmul_ret
+subleq @nmul_ret @b4_np
+subleq @0 @0 @nmul @b4:
+subleq @OUT @c
+subleq @0 @0 @loop
 
 @calc_add:
 subleq @a @a
@@ -87,6 +101,7 @@ subleq @0 @0 @nmul_ret:0
 @b1_np: .data -@b1
 @b2_np: .data -@b2
 @b3_np: .data -@b3
+@b4_np: .data -@b4
 
 @a: .data 0
 @b: .data 0

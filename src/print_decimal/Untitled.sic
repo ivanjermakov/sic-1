@@ -1,0 +1,63 @@
+@loop:
+subleq @n @n
+subleq @n @IN
+subleq @a @a
+subleq @a @n
+subleq @b @b
+subleq @b @n
+subleq @b @n_1
+subleq @b @10 @l10
+subleq @n @n_100 @ge100
+subleq @n @100
+@c10:
+subleq @b @b
+@c10_loop:
+subleq @n @n_10 @c10_cont
+subleq @n @10
+subleq @0 @0 @p10
+@c10_cont:
+subleq @b @1
+subleq @0 @0 @c10_loop
+@p10:
+subleq @a @a
+subleq @a @b
+subleq @b @atoi_off
+subleq @OUT @b
+subleq @a @a
+subleq @a @n
+@p1:
+subleq @b @b
+subleq @b @a
+subleq @b @atoi_off
+subleq @OUT @b
+subleq @OUT @0
+subleq @0 @0 @loop
+
+@ge100:
+subleq @a @100
+subleq @OUT @n_s1
+subleq @0 @0 @c10
+
+@l10:
+subleq @n @atoi_off
+subleq @OUT @n
+subleq @OUT @0
+subleq @0 @0 @loop
+
+@n: .data 0
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+
+@atoi_off: .data 48
+@n_atoi_off: .data -48
+@1: .data 1
+@n_1: .data -1
+@10: .data 10
+@n_10: .data -10
+@n_100: .data -100
+@100: .data 100
+@n_s1: .data -'1'
+@0: .data 0
