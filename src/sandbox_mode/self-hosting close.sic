@@ -1,0 +1,129 @@
+@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+@comp_start:
+subleq @2:@init_j @init_j
+
+@next_stmt:
+subleq @f @f
+subleq @f @4
+@pfx_loop:
+subleq @a @IN
+subleq @f @n_1 @pfx_loop
+
+subleq @a @10 @subleq_stmt
+subleq @a @a @data_stmt
+
+@comp_done:
+subleq @0 @0 @prog
+
+@subleq_stmt:
+subleq @a @IN
+subleq @a @IN
+
+subleq @g @g
+subleq @g @3 @ns_loop
+
+@subleq_done:
+subleq @0 @0 @next_stmt
+
+@data_stmt:
+subleq @a @IN
+subleq @g @g
+subleq @g @2 @ns_loop
+
+@ns_loop:
+subleq @g @n_1 @ns_cont
+subleq @0 @0 @next_stmt
+@ns_cont:
+subleq @0 @0 @pint @pint_ret:
+subleq @0 @0 @write_byte
+
+@write_byte:
+subleq @w_i:0 @b
+subleq @w_i @n_1
+subleq @0 @0 @ns_loop
+
+@pint:
+subleq @d @d
+subleq @f @f
+@pint_loop:
+subleq @e @e
+subleq @e @IN
+subleq @b @b
+subleq @b @e
+subleq @b @0 @pint_done
+subleq @b @n_1
+
+subleq @c @c
+subleq @c @e
+subleq @c @32 @pint_done
+subleq @c @c
+subleq @c @b
+subleq @e @n_atoi_off
+subleq @c @n_47 @skip_neg
+@do_neg:
+subleq @f @n_1
+subleq @0 @0 @pint_loop
+@skip_neg:
+subleq @b @1
+
+subleq @d @0 @pint_cont ; don't *=10 on first iteration
+subleq @a @a
+subleq @a @d
+subleq @b @b
+subleq @b @a
+subleq @a @a
+subleq @a @n_10
+
+subleq @0 @0 @nmul @nmul_ret:
+subleq @d @d
+subleq @d @c
+
+@pint_cont:
+subleq @d @e
+subleq @0 @0 @pint_loop
+
+@pint_done:
+subleq @c @c
+subleq @c @d
+subleq @f @0 @skip_negt
+subleq @a @a
+subleq @a @c
+subleq @b @b
+subleq @b @a
+subleq @c @c
+subleq @c @b
+@skip_negt:
+subleq @0 @0 @pint_ret
+
+; negative multiplication, for all @a>0, @b>0 set @c=-(@a*@b), @a=@a, @b=0
+@nmul:
+subleq @c @c
+subleq @b @n_1
+@nmul_loop:
+subleq @b @1 @nmul_done
+subleq @c @a
+subleq @0 @0 @nmul_loop
+@nmul_done:
+subleq @0 @0 @nmul_ret
+
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+@e: .data 0
+@f: .data 0
+@g: .data 0
+
+@atoi_off: .data 48
+@n_atoi_off: .data -48
+@0: .data 0
+@1: .data 1
+@n_1: .data -1
+@3: .data 3
+@4: .data 4
+@10: .data 10
+@n_10: .data -10
+@32: .data 32
+@n_47: .data -47

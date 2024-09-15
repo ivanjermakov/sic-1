@@ -1,0 +1,142 @@
+@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0; 0 0 0; 0 0 0
+
+@comp_start:
+subleq @2:@init_j @init_j
+
+@next_stmt:
+subleq @is_data_stmt @is_data_stmt
+subleq @f @f
+subleq @f @5
+@pfx_loop:
+subleq @a @a
+subleq @a @IN
+subleq @b @b
+subleq @b @a @comp_done
+subleq @b @10 @empty_line
+@empty_line_cont:
+subleq @f @n_1 @pfx_loop
+
+subleq @a @33 @data_stmt
+
+@subleq_stmt:
+subleq @a @IN
+
+subleq @g @g
+subleq @g @3 @ns_loop
+
+@subleq_done:
+subleq @0 @0 @next_stmt
+
+@comp_done:
+!subleq @0 @0 @prog
+
+@empty_line:
+subleq @a @a @next_stmt
+
+@data_stmt:
+subleq @is_data_stmt @n_1
+subleq @g @g
+subleq @g @1 @ns_loop
+
+@ns_loop:
+subleq @g @n_1 @ns_cont
+subleq @0 @0 @next_stmt
+@ns_cont:
+subleq @0 @0 @pint @pint_ret:
+subleq @0 @0 @write_byte
+
+@write_byte:
+subleq @c @0 @write_cont
+subleq @c @1 @write_halt
+subleq @c @n_1
+
+@write_cont:
+subleq @w_i:0 @c
+subleq @w_i @n_1
+subleq @0 @0 @ns_loop
+
+@write_halt:
+subleq @is_data_stmt @0 @write_cont
+subleq @c @1 @write_cont ; write non-halt whatever
+
+@pint:
+subleq @d @d
+subleq @f @f
+@pint_loop:
+subleq @e @e
+subleq @e @IN
+subleq @b @b
+subleq @b @e
+subleq @b @0 @pint_done
+subleq @b @n_1
+
+subleq @c @c
+subleq @c @e
+subleq @c @32 @pint_done
+subleq @c @c
+subleq @c @b
+subleq @e @n_atoi_off
+subleq @c @n_47 @skip_neg
+@do_neg:
+subleq @f @n_1
+subleq @0 @0 @pint_loop
+@skip_neg:
+subleq @b @1
+
+subleq @d @0 @pint_cont ; don't *=10 on first iteration
+subleq @a @a
+subleq @a @d
+subleq @b @b
+subleq @b @a
+
+@nmul:
+subleq @c @c
+subleq @b @n_1
+@nmul_loop:
+subleq @b @1 @nmul_done
+subleq @c @10
+subleq @0 @0 @nmul_loop
+@nmul_done:
+
+subleq @d @d
+subleq @d @c
+
+@pint_cont:
+subleq @d @e
+subleq @0 @0 @pint_loop
+
+@pint_done:
+subleq @c @c
+subleq @a @a
+subleq @a @d
+subleq @f @0 @pint_pos
+subleq @c @a
+subleq @0 @0 @pint_done2
+@pint_pos:
+subleq @c @d
+@pint_done2:
+subleq @0 @0 @pint_ret
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+@e: .data 0
+@f: .data 0
+@g: .data 0
+
+@is_data_stmt: .data 0
+
+@atoi_off: .data 48
+@n_atoi_off: .data -48
+@0: .data 0
+@1: .data 1
+@n_1: .data -1
+@n_2: .data -2
+@3: .data 3
+@5: .data 5
+@10: .data 10
+@n_10: .data -10
+@32: .data 32
+@33: .data 33
+@n_47: .data -47

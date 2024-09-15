@@ -1,0 +1,138 @@
+@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+@comp_start:
+!subleq @2:@init_j @init_j
+
+@next_stmt:
+subleq @is_sub_stmt @is_sub_stmt
+subleq @f @f
+subleq @f @5
+@pfx_loop:
+subleq @a @a
+subleq @a @IN
+subleq @b @b
+subleq @b @a @comp_done
+subleq @b @10 @next_stmt ; empty line
+@empty_line_cont:
+subleq @f @n_1 @pfx_loop
+
+subleq @a @33 @data_stmt
+
+@subleq_stmt:
+subleq @is_sub_stmt @n_1
+subleq @a @IN
+
+subleq @g @g
+subleq @g @3 @ns_loop
+subleq @0 @0 @next_stmt
+
+@comp_done:
+!subleq @0 @0 @prog
+
+@data_stmt:
+subleq @g @g
+subleq @g @1 @ns_loop
+
+@pint:
+subleq @d @d
+subleq @f @f
+@pint_loop:
+subleq @e @e
+subleq @e @IN
+subleq @b @b
+subleq @b @e
+subleq @b @0 @pint_done
+subleq @b @n_1
+
+subleq @c @c
+subleq @c @e
+subleq @c @32 @pint_done
+subleq @c @c
+subleq @c @b
+subleq @e @n_atoi_off
+subleq @c @n_47 @skip_neg
+@do_neg:
+subleq @f @n_1
+subleq @0 @0 @pint_loop
+@skip_neg:
+subleq @b @1
+
+subleq @d @0 @pint_cont ; don't *=10 on first iteration
+subleq @a @a
+subleq @a @d
+subleq @b @b
+subleq @b @a
+
+@nmul:
+subleq @c @c
+subleq @b @n_1
+@nmul_loop:
+subleq @b @1 @nmul_done
+subleq @c @10
+subleq @0 @0 @nmul_loop
+
+@nmul_done:
+subleq @d @d
+subleq @d @c
+
+@pint_cont:
+subleq @d @e
+subleq @0 @0 @pint_loop
+
+@pint_done:
+subleq @c @c
+subleq @a @a
+subleq @a @d
+subleq @f @0 @pint_pos
+subleq @c @a
+subleq @0 @0 @pint_done2
+@pint_pos:
+subleq @c @d
+
+@pint_done2:
+subleq @0 @0 @write_byte
+
+@write_byte:
+subleq @c @0 @write_cont
+subleq @c @1 @write_halt
+
+@write_and_inc:
+subleq @c @n_1
+
+@write_cont:
+subleq @w_i:0 @c
+subleq @w_i @n_1
+
+@ns_loop:
+subleq @g @n_1 @pint
+subleq @0 @0 @next_stmt
+
+@write_halt:
+subleq @is_sub_stmt @0 @write_and_inc
+subleq @c @reset_p
+subleq @0 @0 @write_cont ; update with reset addr
+
+@reset:
+subleq @0 @0 @comp_start
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+@e: .data 0
+@f: .data 0
+@g: .data 0
+
+@is_sub_stmt: .data 0
+@reset_p: .data @reset
+
+@n_atoi_off: .data -48
+@0: .data 0
+@1: .data 1
+@n_1: .data -1
+@3: .data 3
+@5: .data 5
+@10: .data 10
+@32: .data 32
+@33: .data 33
+@n_47: .data -47

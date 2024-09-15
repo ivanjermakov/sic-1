@@ -1,0 +1,104 @@
+@loop:
+subleq @a @IN
+subleq @a @IN
+subleq @a @IN
+subleq @a @IN
+subleq @a @IN
+subleq @a @IN
+
+subleq @pint_ret @pint_ret
+subleq @pint_ret @b1_np
+subleq @0 @0 @pint @b1:
+subleq @OUT @c
+subleq @0 @0 @loop
+
+; read chars from @IN until invalid digit, write negated parsed int to @c
+@pint:
+subleq @d @d
+subleq @f @f
+@pint_loop:
+subleq @e @e
+subleq @e @IN
+subleq @b @b
+subleq @b @e
+subleq @b @0 @pint_done
+subleq @b @n_1
+
+subleq @c @c
+subleq @c @e
+subleq @c @10 @pint_done
+subleq @c @c
+subleq @c @b
+subleq @e @n_atoi_off
+subleq @c @n_47 @skip_neg
+@do_neg:
+subleq @f @n_1
+subleq @0 @0 @pint_loop
+@skip_neg:
+subleq @b @1
+
+subleq @d @0 @pint_cont ; don't *=10 on first iteration
+subleq @a @a
+subleq @a @d
+subleq @b @b
+subleq @b @a
+subleq @a @a
+subleq @a @n_10
+
+subleq @nmul_ret @nmul_ret
+subleq @nmul_ret @b2_np
+subleq @0 @0 @nmul @b2:
+subleq @d @d
+subleq @d @c
+
+@pint_cont:
+subleq @d @e
+subleq @0 @0 @pint_loop
+
+@pint_done:
+subleq @c @c
+subleq @c @d
+subleq @f @0 @skip_negt
+subleq @a @a
+subleq @a @c
+subleq @b @b
+subleq @b @a
+subleq @c @c
+subleq @c @b
+@skip_negt:
+subleq @0 @0 @pint_ret:0
+
+; negative multiplication, for all @a>0, @b>0 set @c=-(@a*@b), @a=@a, @b=0
+@nmul:
+subleq @c @c
+subleq @b @n_1
+@nmul_loop:
+subleq @b @1 @nmul_done
+subleq @c @a
+subleq @0 @0 @nmul_loop
+@nmul_done:
+subleq @0 @0 @nmul_ret:0
+
+@b1_np: .data -@b1
+@b2_np: .data -@b2
+
+@a: .data 0
+@b: .data 0
+@c: .data 0
+@d: .data 0
+@e: .data 0
+@f: .data 0
+@g: .data 0
+@h: .data 0
+
+@atoi_off: .data 48
+@n_atoi_off: .data -48
+@c_star: .data '*'
+@0: .data 0
+@1: .data 1
+@n_1: .data -1
+@n_2: .data -2
+@n_3: .data -3
+@n_10: .data -10
+@10: .data 10
+@n_47: .data -47
