@@ -1,6 +1,6 @@
 import { mkdir, readFile, rmdir, writeFile } from "fs/promises";
 
-const json: any = await (await readFile("cloud.txt")).toString();
+const json: any = (await readFile("cloud.txt")).toString();
 await rmdir("src", { recursive: true });
 const save = JSON.parse(json);
 Object.entries(save).forEach(async ([puzzleKey, puzzleStr]: [string, any]) => {
