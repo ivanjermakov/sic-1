@@ -1,4 +1,4 @@
-@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 @prog_end:0
+@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0; 0 0 @prog_end:0
 
 @char: .data 0
 @digit_char: .data 0
@@ -8,6 +8,9 @@
 @mul_tmp1: .data 0
 @write_tmp: .data 0
 @is_neg: .data 0
+@n_inst_a: .data 0
+@n_inst_b: .data 0
+@n_inst_c: .data 0
 
 @n_1: .data -1
 @1: .data 1
@@ -30,7 +33,38 @@ subleq @char @n_33 @comp_subleq
 subleq @char @32 @comp_data
 
 @eval:
-!subleq @char @char @HALT
+subleq @n_inst_a @n_inst_a
+subleq @n_inst_a @ptr_a:0
+subleq @n_inst_b @n_inst_b
+subleq @n_inst_b @ptr_b:1
+
+subleq @inst_a @inst_a
+subleq @inst_a @n_inst_a
+
+subleq @inst_b @inst_b
+subleq @inst_b @n_inst_b
+
+!subleq @inst_a:0 @inst_b:0 @eval_jmp
+
+@eval_cont:
+subleq @ptr_a @n_3
+subleq @ptr_b @n_3
+subleq @ptr_c @n_3
+subleq @char @char @eval
+
+@eval_jmp:
+subleq @n_inst_c @n_inst_c
+subleq @n_inst_c @ptr_c:2
+subleq @ptr_a @ptr_a
+subleq @ptr_a @n_inst_c
+subleq @ptr_b @ptr_b
+subleq @ptr_b @n_inst_c
+subleq @ptr_b @n_1
+subleq @ptr_c @ptr_c
+subleq @ptr_c @n_inst_c
+subleq @ptr_c @n_1
+subleq @ptr_c @n_1
+subleq @char @char @eval
 
 @comp_data:
 subleq @num_count @n_1
