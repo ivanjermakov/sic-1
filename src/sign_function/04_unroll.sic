@@ -1,0 +1,75 @@
+@loop:
+subleq @a @IN @gez
+subleq @OUT @1 @loop2
+@gez:
+subleq @a @n_1 @gz
+subleq @OUT @OUT @loop2
+@gz:
+subleq @OUT @n_1 @loop
+
+@loop2:
+subleq @a2 @IN @gez2
+subleq @OUT @1 @loop3
+@gez2:
+subleq @a2 @n_1 @gz2
+subleq @OUT @OUT @loop3
+@gz2:
+subleq @OUT @n_1 @loop3
+
+@loop3:
+subleq @a3 @IN @gez3
+subleq @OUT @1 @loop4
+@gez3:
+subleq @a3 @n_1 @gz3
+subleq @OUT @OUT @loop4
+@gz3:
+subleq @OUT @n_1 @loop4
+
+@loop4:
+subleq @a4 @IN @gez4
+subleq @OUT @1 @loop5
+@gez4:
+subleq @a4 @n_1 @gz4
+subleq @OUT @OUT @loop5
+@gz4:
+subleq @OUT @n_1 @loop5
+
+@loop5:
+subleq @a5 @IN @gez5
+subleq @OUT @1 @loop6
+@gez5:
+subleq @a5 @n_1 @gz5
+subleq @OUT @OUT @loop6
+@gz5:
+subleq @OUT @n_1 @loop6
+
+@loop6:
+subleq @a6 @IN @gez6
+subleq @OUT @1 @loop7
+@gez6:
+subleq @a6 @n_1 @gz6
+subleq @OUT @OUT @loop7
+@gz6:
+subleq @OUT @n_1 @loop7
+
+@loop7:
+subleq @a7 @IN @gez7
+subleq @OUT @1 @loop8
+@gez7:
+subleq @a7 @n_1 @gz7
+subleq @OUT @OUT @loop8
+@gz7:
+subleq @OUT @n_1 @loop8
+
+@loop8:
+
+@1: .data 1
+@n_1: .data -1
+
+@a: .data 0
+@a2: .data 0
+@a3: .data 0
+@a4: .data 0
+@a5: .data 0
+@a6: .data 0
+@a7: .data 0

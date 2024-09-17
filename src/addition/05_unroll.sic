@@ -1,0 +1,25 @@
+subleq @a @IN
+subleq @a @IN
+subleq @OUT @a
+
+subleq @a2 @IN
+subleq @a2 @IN
+subleq @OUT @a2
+
+subleq @a3 @IN
+subleq @a3 @IN
+subleq @OUT @a3
+
+subleq @a4 @IN
+subleq @a4 @IN
+subleq @OUT @a4
+
+subleq @a5 @IN
+subleq @a5 @IN
+subleq @OUT @a5
+
+@a: .data 0
+@a2: .data 0
+@a3: .data 0
+@a4: .data 0
+@a5: .data 0

@@ -1,0 +1,5 @@
+@loop:
+subleq @a @IN
+subleq @a @IN
+subleq @OUT @a @a:0
+subleq @a @a @loop
