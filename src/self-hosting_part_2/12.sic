@@ -1,0 +1,135 @@
+@prog: .data 0 0 @init_j:@comp_start 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 @prog_end:0
+
+@nop: @char: @n_digit_char: @mul_tmp: @write_tmp: .data 0
+@digit_char: .data 0
+@num_count: .data 0
+@parsed_int: .data 0
+@reset_c: @n_inst: @pfx_i: @is_neg: .data 0 ; must be the last one in the erasable sector
+
+@2: .data 2
+@n_33: .data -33
+@n_read_inst_a: .data -@read_inst_a
+@n_read_inst_b: .data -@read_inst_b
+@n_read_inst_c: .data -@read_inst_c
+
+@comp_start:
+@reset:
+subleq @reset_c @big_n ; anything [31, 127] works since reset loop will set it to 0 and break regardless
+subleq @r_i @r_i
+subleq @r_j @r_j
+subleq @inst_ptr @inst_ptr
+subleq @write_i @write_i
+
+@reset_loop:
+subleq @r_i:0 @r_j:0
+subleq @r_i @n_1 @n_1:255 ; never jmps
+subleq @r_j @n_1 @1:1 ; never jmps
+subleq @reset_c @n_1 @reset_loop
+
+@comp_next_stmt:
+@pfx_trim:
+subleq @pfx_i @pfx_i @big_n:
+subleq @pfx_i @5
+@pfx_loop:
+subleq @char @char
+subleq @char @IN
+subleq @char @n_1 @pfx_cont
+subleq @nop @nop @eval
+@pfx_cont:
+subleq @char @1
+subleq @pfx_i @n_1 @pfx_loop
+
+subleq @char @n_33 @comp_subleq
+subleq @char @32
+
+@comp_data:
+subleq @num_count @n_1 @32:32 ; never jmps
+subleq @parsed_int @parsed_int @parse_int
+
+@comp_subleq:
+subleq @IN @IN
+subleq @num_count @n_3 @5:5 ; never jmps
+subleq @parsed_int @parsed_int @parse_int
+
+@eval:
+subleq @read_inst_ret @read_inst_ret
+subleq @read_inst_ret @n_read_inst_a
+
+@read_inst:
+subleq @n_inst @n_inst
+subleq @n_inst @inst_ptr:0
+subleq @inst_ptr @n_1 @n_15:241 ; never jmps
+subleq @nop @nop @read_inst_ret:0
+
+@read_inst_a:
+subleq @inst_a @inst_a
+subleq @inst_a @n_inst
+subleq @read_inst_ret @read_inst_ret
+subleq @read_inst_ret @n_read_inst_b
+subleq @nop @nop @read_inst @read_inst_b:
+subleq @inst_b @inst_b
+subleq @inst_b @n_inst
+
+subleq @inst_a:0 @inst_b:0 @eval_jmp
+
+@eval_cont:
+subleq @inst_ptr @n_1 @n_3:253 ; never jmps
+subleq @nop @nop @eval
+
+@eval_jmp:
+subleq @read_inst_ret @read_inst_ret
+subleq @read_inst_ret @n_read_inst_c
+subleq @nop @nop @read_inst @read_inst_c:
+subleq @inst_ptr @inst_ptr
+subleq @inst_ptr @n_inst
+subleq @n_inst @OUT @eval
+@eval_neg_c:
+subleq @inst_ptr @n_2 @eval_neg_done
+@eval_halt:
+subleq @nop @nop @comp_start
+@eval_neg_done:
+subleq @inst_ptr @2 @eval
+
+@parse_int:
+subleq @is_neg @is_neg
+@parse_digit:
+subleq @digit_char @IN
+subleq @digit_char @n_33 @parse_digit_or_sign
+subleq @digit_char @digit_char @parse_done
+@parse_digit_or_sign:
+subleq @digit_char @n_15 @parse_pos
+@parse_neg:
+subleq @is_neg @n_1
+subleq @digit_char @digit_char @parse_digit
+@parse_pos:
+@mult_n_by_10:
+subleq @mul_tmp @mul_tmp
+subleq @mul_tmp @parsed_int
+subleq @mul_tmp @parsed_int
+subleq @mul_tmp @parsed_int
+subleq @parsed_int @mul_tmp
+subleq @parsed_int @mul_tmp
+subleq @parsed_int @mul_tmp
+
+@parse_cont:
+subleq @n_digit_char @n_digit_char
+subleq @n_digit_char @digit_char
+subleq @is_neg @OUT @acc_pos
+@acc_neg:
+subleq @parsed_int @digit_char
+subleq @digit_char @digit_char @parse_digit
+@acc_pos:
+subleq @parsed_int @n_digit_char
+subleq @digit_char @digit_char @parse_digit
+
+@parse_done:
+@write_int:
+subleq @write_i:0 @parsed_int
+subleq @write_i @n_1 @n_2:254 ; never jmps
+
+subleq @num_count @1 @comp_next_stmt
+subleq @parsed_int @parsed_int @parse_int
+
+
+
+
